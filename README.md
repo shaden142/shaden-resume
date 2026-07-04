@@ -26,4 +26,4 @@ Cybersecurity graduate from the University of Jeddah (GPA 4.9/5.0) and EC-Counci
 
 ---
 
-📫 **Let's connect:** [LinkedIn](https://linkedin.com/in/shaden-alsulami) · shadeeen142@gmail.com · [Portfolio](#)
+**Let's connect:** [LinkedIn](https://linkedin.com/in/shaden-alsulami) · shadeeen142@gmail.com · [Portfolio](https://shaden142.github.io/shaden-resume/)
