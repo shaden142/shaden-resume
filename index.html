@@ -1,89 +1,624 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Shaden Alsulami's Personal Resume">
-    <title>Shaden Alsulami - Resume</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shaden Alsulami — Cybersecurity Analyst</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --void:#0A0E13;
+    --console:#131A22;
+    --console-2:#182029;
+    --border:#232C38;
+    --frost:#EAEEF3;
+    --fog:#8A97AB;
+    --fog-dim:#5C6779;
+    --signal:#2BD9C4;
+    --signal-dim:#1B4A46;
+    --alert:#F0A73C;
+    --critical:#F1585F;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Inter', sans-serif;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important;}
+  }
+
+  body{
+    background:var(--void);
+    color:var(--frost);
+    font-family:var(--sans);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  a{color:inherit; text-decoration:none;}
+  ul{list-style:none;}
+
+  .wrap{
+    max-width:1100px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  /* subtle grid texture on the void background */
+  .grid-tex{
+    position:fixed; inset:0; z-index:0; pointer-events:none;
+    background-image:
+      linear-gradient(rgba(43,217,196,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(43,217,196,0.035) 1px, transparent 1px);
+    background-size:48px 48px;
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, #000 0%, transparent 70%);
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(10,14,19,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:16px 32px;
+    max-width:1100px; margin:0 auto;
+  }
+  .brand{display:flex; align-items:center; gap:10px;}
+  .brand-name{
+    font-family:var(--mono); font-weight:600; font-size:14px;
+    letter-spacing:0.02em; color:var(--frost);
+  }
+  .brand-name span{color:var(--signal);}
+  .nav-links{display:flex; align-items:center; gap:28px;}
+  .nav-links a{
+    font-family:var(--mono); font-size:12.5px; color:var(--fog);
+    letter-spacing:0.04em; transition:color .15s ease;
+  }
+  .nav-links a:hover, .nav-links a:focus-visible{color:var(--signal);}
+  .nav-cv{
+    font-family:var(--mono); font-size:12px; font-weight:600;
+    color:var(--void); background:var(--signal);
+    padding:9px 16px; border-radius:3px;
+    letter-spacing:0.03em;
+  }
+  .nav-cv:hover{background:#4EE6D2;}
+  .nav-toggle{display:none;}
+
+  @media (max-width:760px){
+    .nav-links{position:absolute; top:100%; left:0; right:0; flex-direction:column; align-items:flex-start; background:var(--void); border-bottom:1px solid var(--border); padding:20px 32px; gap:18px; display:none;}
+    .nav-links.open{display:flex;}
+    .nav-links .nav-cv{margin-top:4px;}
+    .nav-toggle{display:block; background:none; border:1px solid var(--border); color:var(--frost); width:36px; height:36px; border-radius:4px; font-size:16px; cursor:pointer;}
+  }
+
+  /* ---------- LOGO MARK ---------- */
+  .mark{width:30px; height:30px; flex-shrink:0;}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative; z-index:1;
+    padding:110px 0 90px;
+    border-bottom:1px solid var(--border);
+  }
+  .status-badge{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:12px; color:var(--signal);
+    border:1px solid var(--signal-dim); background:rgba(43,217,196,0.06);
+    padding:6px 12px; border-radius:20px;
+    margin-bottom:28px;
+  }
+  .status-dot{width:7px; height:7px; border-radius:50%; background:var(--signal); box-shadow:0 0 0 0 rgba(43,217,196,0.6); animation:pulse 2s infinite;}
+  @keyframes pulse{
+    0%{box-shadow:0 0 0 0 rgba(43,217,196,0.5);}
+    70%{box-shadow:0 0 0 8px rgba(43,217,196,0);}
+    100%{box-shadow:0 0 0 0 rgba(43,217,196,0);}
+  }
+
+  .hero-title{
+    font-family:var(--mono); font-weight:700;
+    font-size:clamp(34px, 5.4vw, 58px);
+    line-height:1.12; letter-spacing:-0.01em;
+    max-width:820px;
+  }
+  .hero-title .accent{color:var(--signal);}
+  .hero-role{
+    font-family:var(--sans); font-weight:500; font-size:19px;
+    color:var(--fog); margin-top:18px; max-width:560px;
+  }
+
+  .terminal{
+    margin-top:44px;
+    max-width:560px;
+    background:var(--console);
+    border:1px solid var(--border);
+    border-radius:8px;
+    overflow:hidden;
+  }
+  .terminal-bar{
+    display:flex; align-items:center; gap:6px;
+    padding:10px 14px; border-bottom:1px solid var(--border);
+    background:var(--console-2);
+  }
+  .terminal-dot{width:9px; height:9px; border-radius:50%; background:var(--fog-dim);}
+  .terminal-label{font-family:var(--mono); font-size:11px; color:var(--fog-dim); margin-left:6px;}
+  .terminal-body{padding:20px 22px; font-family:var(--mono); font-size:13.5px;}
+  .terminal-body p{margin-bottom:10px; white-space:pre-wrap;}
+  .terminal-body p:last-child{margin-bottom:0;}
+  .t-prompt{color:var(--signal);}
+  .t-out{color:var(--fog); padding-left:18px;}
+  .cursor{display:inline-block; width:7px; height:14px; background:var(--signal); vertical-align:middle; animation:blink 1s step-end infinite;}
+  @keyframes blink{50%{opacity:0;}}
+
+  .hero-ctas{display:flex; gap:14px; margin-top:40px; flex-wrap:wrap;}
+  .btn{
+    font-family:var(--mono); font-size:13px; font-weight:600;
+    padding:13px 24px; border-radius:4px; letter-spacing:0.02em;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:all .15s ease; cursor:pointer; border:1px solid transparent;
+  }
+  .btn-primary{background:var(--signal); color:var(--void);}
+  .btn-primary:hover{background:#4EE6D2; transform:translateY(-1px);}
+  .btn-ghost{border-color:var(--border); color:var(--frost);}
+  .btn-ghost:hover{border-color:var(--signal); color:var(--signal);}
+
+  /* ---------- SECTION SHARED ---------- */
+  section{position:relative; z-index:1; padding:90px 0; border-bottom:1px solid var(--border);}
+  .eyebrow{
+    font-family:var(--mono); font-size:12px; color:var(--signal);
+    letter-spacing:0.12em; text-transform:uppercase; margin-bottom:14px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .eyebrow::before{content:''; width:16px; height:1px; background:var(--signal);}
+  .sec-title{
+    font-family:var(--mono); font-weight:700; font-size:clamp(24px,3.4vw,32px);
+    margin-bottom:20px;
+  }
+  .sec-lede{color:var(--fog); max-width:640px; font-size:16px;}
+
+  /* ---------- ABOUT ---------- */
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:60px; margin-top:44px;}
+  .about-text p{color:#C4CCD8; font-size:15.5px; margin-bottom:16px;}
+  .about-facts{border:1px solid var(--border); border-radius:8px; overflow:hidden;}
+  .fact{display:flex; justify-content:space-between; padding:16px 20px; border-bottom:1px solid var(--border); font-size:13.5px;}
+  .fact:last-child{border-bottom:none;}
+  .fact-k{font-family:var(--mono); color:var(--fog-dim); font-size:11.5px; letter-spacing:0.04em; text-transform:uppercase;}
+  .fact-v{color:var(--frost); font-weight:500; text-align:right;}
+  @media (max-width:760px){.about-grid{grid-template-columns:1fr;}}
+
+  /* ---------- SKILLS ---------- */
+  .skill-cats{margin-top:44px; display:flex; flex-direction:column; gap:26px;}
+  .skill-cat-label{font-family:var(--mono); font-size:12px; color:var(--fog-dim); letter-spacing:0.04em; text-transform:uppercase; margin-bottom:12px;}
+  .chips{display:flex; flex-wrap:wrap; gap:10px;}
+  .chip{
+    display:inline-flex; align-items:center; gap:7px;
+    font-family:var(--mono); font-size:12.5px; color:var(--frost);
+    background:var(--console); border:1px solid var(--border);
+    padding:8px 13px; border-radius:20px;
+  }
+  .chip-dot{width:6px; height:6px; border-radius:50%;}
+  .dot-signal{background:var(--signal);}
+  .dot-alert{background:var(--alert);}
+  .dot-fog{background:var(--fog-dim);}
+  .dot-critical{background:var(--critical);}
+
+  .tools-row{margin-top:34px; padding-top:30px; border-top:1px dashed var(--border);}
+  .tool-list{display:flex; flex-wrap:wrap; gap:8px; margin-top:14px;}
+  .tool{font-family:var(--mono); font-size:12px; color:var(--fog); background:var(--console-2); padding:7px 12px; border-radius:4px; border:1px solid var(--border);}
+
+  /* ---------- CERTS ---------- */
+  .cert-grid{margin-top:44px; display:grid; grid-template-columns:repeat(3,1fr); gap:16px;}
+  .cert-card{background:var(--console); border:1px solid var(--border); border-radius:8px; padding:22px;}
+  .cert-card:hover{border-color:var(--signal-dim);}
+  .cert-name{font-weight:600; font-size:14.5px; margin-bottom:8px; color:var(--frost);}
+  .cert-meta{font-family:var(--mono); font-size:11.5px; color:var(--fog-dim);}
+  @media (max-width:900px){.cert-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.cert-grid{grid-template-columns:1fr;}}
+
+  /* ---------- PROJECTS ---------- */
+  .featured{
+    margin-top:44px;
+    background:linear-gradient(155deg, var(--console) 0%, var(--console-2) 100%);
+    border:1px solid var(--border); border-radius:12px;
+    padding:40px; position:relative; overflow:hidden;
+  }
+  .featured::after{
+    content:''; position:absolute; top:-40%; right:-15%; width:420px; height:420px;
+    background:radial-gradient(circle, rgba(43,217,196,0.10) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .featured-tag{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:11.5px; color:var(--alert);
+    border:1px solid rgba(240,167,60,0.3); background:rgba(240,167,60,0.08);
+    padding:5px 11px; border-radius:20px; margin-bottom:18px;
+  }
+  .featured h3{font-family:var(--mono); font-size:23px; font-weight:700; margin-bottom:14px;}
+  .featured p{color:#C4CCD8; font-size:15px; max-width:680px; margin-bottom:10px;}
+  .attack-tags{display:flex; flex-wrap:wrap; gap:8px; margin:20px 0 26px;}
+  .attack-tag{font-family:var(--mono); font-size:11.5px; color:var(--critical); background:rgba(241,88,95,0.08); border:1px solid rgba(241,88,95,0.25); padding:5px 10px; border-radius:4px;}
+  .stat-row{display:flex; gap:36px; margin:26px 0; flex-wrap:wrap;}
+  .stat-num{font-family:var(--mono); font-weight:700; font-size:32px; color:var(--signal);}
+  .stat-label{font-family:var(--mono); font-size:11px; color:var(--fog-dim); text-transform:uppercase; letter-spacing:0.04em; margin-top:2px;}
+  .stack-line{font-family:var(--mono); font-size:12.5px; color:var(--fog); margin-top:18px;}
+  .stack-line b{color:var(--frost); font-weight:500;}
+
+  .proj-grid{margin-top:22px; display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  .proj-card{background:var(--console); border:1px solid var(--border); border-radius:10px; padding:28px; display:flex; flex-direction:column;}
+  .proj-card:hover{border-color:var(--signal-dim);}
+  .proj-tag{font-family:var(--mono); font-size:10.5px; color:var(--fog-dim); text-transform:uppercase; letter-spacing:0.06em; margin-bottom:10px;}
+  .proj-card h4{font-family:var(--mono); font-size:17px; font-weight:600; margin-bottom:10px;}
+  .proj-card p{color:#B7C0CE; font-size:14px; margin-bottom:8px;}
+  .proj-chip-row{display:flex; flex-wrap:wrap; gap:7px; margin-top:14px;}
+  .proj-chip{font-family:var(--mono); font-size:11px; color:var(--signal); background:rgba(43,217,196,0.07); border:1px solid var(--signal-dim); padding:4px 9px; border-radius:4px;}
+  .proj-stat{font-family:var(--mono); font-size:12px; color:var(--alert); margin-top:14px;}
+  @media (max-width:760px){.proj-grid{grid-template-columns:1fr;}}
+
+  /* ---------- EXPERIENCE / EDUCATION ---------- */
+  .exp-item{display:grid; grid-template-columns:180px 1fr; gap:32px; padding:26px 0; border-bottom:1px solid var(--border);}
+  .exp-item:last-child{border-bottom:none;}
+  .exp-date{font-family:var(--mono); font-size:12px; color:var(--fog-dim); padding-top:2px;}
+  .exp-role{font-weight:600; font-size:16.5px; margin-bottom:3px;}
+  .exp-org{color:var(--signal); font-size:13.5px; margin-bottom:14px; font-family:var(--mono);}
+  .exp-item ul{display:flex; flex-direction:column; gap:9px;}
+  .exp-item li{color:#B7C0CE; font-size:14.5px; padding-left:16px; position:relative;}
+  .exp-item li::before{content:'▹'; position:absolute; left:0; color:var(--signal); font-size:12px; top:1px;}
+  @media (max-width:640px){.exp-item{grid-template-columns:1fr; gap:8px;}}
+
+  /* ---------- CONTACT ---------- */
+  .contact-sec{border-bottom:none; text-align:center;}
+  .contact-sec .eyebrow{justify-content:center;}
+  .contact-sec .eyebrow::before{display:none;}
+  .contact-title{font-family:var(--mono); font-weight:700; font-size:clamp(28px,4vw,40px); margin-bottom:16px;}
+  .contact-lede{color:var(--fog); max-width:520px; margin:0 auto 40px;}
+  .contact-grid{display:flex; justify-content:center; gap:14px; flex-wrap:wrap;}
+  .ccard{
+    display:flex; align-items:center; gap:12px;
+    background:var(--console); border:1px solid var(--border); border-radius:8px;
+    padding:16px 22px; font-family:var(--mono); font-size:13px; color:var(--frost);
+    transition:all .15s ease;
+  }
+  .ccard:hover{border-color:var(--signal); transform:translateY(-2px);}
+  .ccard svg{flex-shrink:0;}
+
+  footer{padding:32px; text-align:center; font-family:var(--mono); font-size:11.5px; color:var(--fog-dim);}
+
+  /* ---------- REVEAL ANIMATION ---------- */
+  .reveal{opacity:0; transform:translateY(16px); transition:opacity .6s ease, transform .6s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+
+  /* focus visibility */
+  a:focus-visible, button:focus-visible{outline:2px solid var(--signal); outline-offset:2px;}
+</style>
 </head>
 <body>
-    <!-- Header Section -->
-    <header>
-        <div class="container">
-            <h1>Shaden Alsulami</h1>
-            <img src="Profile.jpg" alt="Shaden Alsulami's Profile Picture" class="profile-img">
 
-            <p class="subtitle">Cyber Security College Student</p>
-            <p class="intro">
-                I am currently a cybersecurity student at the University of Jeddah, with a deep passion for vulnerability discovery 
-                and ethical hacking. My goal is to develop my skills and knowledge to become an expert in offensive security, particularly as 
-                a red team member. I am driven by a desire to continuously improve and stay updated with the latest trends and technologies in 
-                cybersecurity, always striving to contribute effectively to this ever-evolving field.
-            </p>
-        </div>
-    </header>
+<div class="grid-tex"></div>
 
-    <!-- Education Section -->
-    <section id="education" class="content-section">
-        <h2>Education</h2>
-        <div class="education-content">
-            <p><strong>Bachelor of Science in Cybersecurity</strong><br>
-            University of Jeddah, 2021–2026</p>
-            <p>Completed 6 courses as part of the <strong>KAUST Cybersecurity Program</strong>, building a foundation in cloud and wireless security.</p>
-        </div>
-    </section>
+<header>
+  <nav>
+    <div class="brand">
+      <svg class="mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 2L36 9V19C36 28.5 29.5 35.8 20 38C10.5 35.8 4 28.5 4 19V9L20 2Z" stroke="#2BD9C4" stroke-width="2" fill="rgba(43,217,196,0.06)"/>
+        <path d="M13 20.5L18 25.5L27 15" stroke="#2BD9C4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="brand-name">SHADEN<span>.</span>ALSULAMI</span>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">☰</button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#certifications">Certifications</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+      <li><a class="nav-cv" href="Shaden_Alsulami_Resume.pdf" download>Download CV</a></li>
+    </ul>
+  </nav>
+</header>
 
-    <!-- Projects Section -->
-    <section id="projects" class="content-section">
-        <h2>Projects & Assignments</h2>
-        <div class="project">
-            <h3>Employee Record Management System</h3>
-            <p>Developed a Java-based system to manage employee data, enabling HR to add, remove, and modify employee records efficiently. This system supports role-based access control and ensures data integrity for corporate HR processes.</p>
-        </div>
-        <div class="project">
-            <h3>Civil Affairs Appointment Booking System</h3>
-            <p>Built a Java application for booking appointments at Civil Affairs offices, allowing users to schedule and manage appointments for national ID renewal, passport issuance, or renewal. The system enhances user convenience by offering a streamlined appointment management interface.</p>
-        </div>
-    </section>
+<section class="hero">
+  <div class="wrap">
+    <div class="status-badge"><span class="status-dot"></span>OPEN TO CYBERSECURITY ANALYST ROLES</div>
+    <h1 class="hero-title">Shaden Alsulami —<br>securing systems <span class="accent">before</span> attackers find them.</h1>
+    <p class="hero-role">Cybersecurity graduate &amp; EC-Council Certified SOC Analyst (CSAv2), with a foundation in both offensive and defensive security — penetration testing and API security alongside SOC operations and cloud security.</p>
 
-    <!-- Certificates and Awards Section -->
-    <section id="certificates" class="content-section">
-        <h2>Certificates & Awards</h2>
-        <div class="certificates-content">
-            <p><strong>Cybersecurity Fundamentals</strong> – Coursera (2023)</p>
-            <p><strong>Cloud and Wireless Security</strong> – KAUST Cybersecurity Program (2023)</p>
-            <p><strong>Security Principles</strong> – Coursera,Authorized by ISC² (2023) 
-                <a href="https://coursera.org/verify/U24HQUC3YJDV" target="_blank">Verify Certificate</a></p>
-            <p><strong>Ethical Hacking Certification</strong> – KAUST (2024)</p>
-        </div>
-    </section>
-    <!-- Contact Section -->
-    <section id="contact" class="content-section">
-        <h2>Contact Information</h2>
-        <p>Email: <a href="mailto:shadeeen142@gmail.com">shadeeen142@gmail.com</a></p>
-        <p>Phone: <a href="tel:+966568684962">0568684962</a></p>
-        <p>Twitter: <a href="https://twitter.com/shaden_cy" target="_blank">@shaden_cy</a></p>
-        <p>LinkedIn: <a href="http://linkedin.com/in/shaden-alsulami" target="_blank">Shaden Alsulami</a></p>
-        
-         <!-- Contact Form -->
-    <form action="mailto:shadeeen142@gmail.com" method="POST" enctype="text/plain">
-        <h5>Fill This Form to Send Me An Email</h5>
-        <label for="name">Your Name:</label>
-        <input type="text" id="name" name="name" required><br>
-        
-        <label for="email">Your Email:</label>
-        <input type="email" id="email" name="email" required><br>
-        
-        <label for="message">Your Message:</label><br>
-        <textarea id="message" name="message" rows="5" required></textarea><br>
-        
-        <button type="submit">Send Message</button>
-    </form>
-    </section>
+    <div class="terminal">
+      <div class="terminal-bar">
+        <span class="terminal-dot"></span><span class="terminal-dot"></span><span class="terminal-dot"></span>
+        <span class="terminal-label">session — analyst@soc</span>
+      </div>
+      <div class="terminal-body">
+        <p><span class="t-prompt">$</span> whoami</p>
+        <p class="t-out">Cybersecurity grad, University of Jeddah — GPA 4.9/5.0</p>
+        <p><span class="t-prompt">$</span> certifications --active</p>
+        <p class="t-out">EC-Council Certified SOC Analyst (CSAv2)</p>
+        <p><span class="t-prompt">$</span> certifications --in-progress</p>
+        <p class="t-out">Certified Ethical Hacker (CEH)</p>
+        <p><span class="t-prompt">$</span> status<span class="cursor"></span></p>
+      </div>
+    </div>
 
-    <footer>
-        <p>&copy; 2024 Shaden Alsulami. All Rights Reserved.</p>
-    </footer>
+    <div class="hero-ctas">
+      <a class="btn btn-primary" href="#contact">Get in Touch</a>
+      <a class="btn btn-ghost" href="Shaden_Alsulami_Resume.pdf" download>Download CV</a>
+      <a class="btn btn-ghost" href="https://github.com/shaden142" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="eyebrow">01 / About</div>
+    <h2 class="sec-title reveal">Analyst mindset, builder's hands.</h2>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>I'm a Cybersecurity graduate from the University of Jeddah and an EC-Council Certified SOC Analyst (CSAv2), with a foundation in both offensive and defensive security — penetration testing, web application and API security, cloud security, and SOC operations.</p>
+        <p>My work ranges from building machine-learning detection systems for cloud and web threats, to running full red/blue team simulations on enterprise Active Directory environments, to supporting live SOC operations during my internship at King Fahd Armed Forces Hospital.</p>
+        <p>I'm currently preparing for the Certified Ethical Hacker (CEH) certification to deepen my offensive security expertise, and looking for a Cybersecurity Analyst role where I can keep building on that foundation.</p>
+      </div>
+      <div class="about-facts reveal">
+        <div class="fact"><span class="fact-k">Location</span><span class="fact-v">Jeddah, Saudi Arabia</span></div>
+        <div class="fact"><span class="fact-k">Education</span><span class="fact-v">B.S. Cybersecurity — GPA 4.9/5.0</span></div>
+        <div class="fact"><span class="fact-k">Certification</span><span class="fact-v">CSAv2 · CEH (in progress)</span></div>
+        <div class="fact"><span class="fact-k">Focus</span><span class="fact-v">Offensive &amp; Defensive Security</span></div>
+        <div class="fact"><span class="fact-k">Availability</span><span class="fact-v">Open to opportunities</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="eyebrow">02 / Skills</div>
+    <h2 class="sec-title reveal">What I work with.</h2>
+    <p class="sec-lede reveal">Grouped the way a SOC dashboard would tag them — by function, not just a flat list.</p>
+
+    <div class="skill-cats reveal">
+      <div>
+        <div class="skill-cat-label">Offensive Security</div>
+        <div class="chips">
+          <span class="chip"><span class="chip-dot dot-critical"></span>Penetration Testing</span>
+          <span class="chip"><span class="chip-dot dot-critical"></span>Web Application Security</span>
+          <span class="chip"><span class="chip-dot dot-critical"></span>API Security</span>
+          <span class="chip"><span class="chip-dot dot-critical"></span>OWASP Top 10</span>
+          <span class="chip"><span class="chip-dot dot-critical"></span>MITRE ATT&amp;CK</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-cat-label">Security Operations &amp; Defense</div>
+        <div class="chips">
+          <span class="chip"><span class="chip-dot dot-signal"></span>Threat Detection &amp; Analysis</span>
+          <span class="chip"><span class="chip-dot dot-signal"></span>SIEM Monitoring</span>
+          <span class="chip"><span class="chip-dot dot-signal"></span>Incident Investigation</span>
+          <span class="chip"><span class="chip-dot dot-signal"></span>Vulnerability Assessment</span>
+          <span class="chip"><span class="chip-dot dot-signal"></span>Risk Assessment</span>
+        </div>
+      </div>
+      <div>
+        <div class="skill-cat-label">Cloud, Network &amp; Forensics</div>
+        <div class="chips">
+          <span class="chip"><span class="chip-dot dot-alert"></span>Cloud Security (AWS)</span>
+          <span class="chip"><span class="chip-dot dot-alert"></span>Network Security</span>
+          <span class="chip"><span class="chip-dot dot-alert"></span>Malware Analysis</span>
+          <span class="chip"><span class="chip-dot dot-fog"></span>Digital Forensics</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="tools-row reveal">
+      <div class="skill-cat-label">Tools &amp; Platforms</div>
+      <div class="tool-list">
+        <span class="tool">Kali Linux</span><span class="tool">Burp Suite</span><span class="tool">Nmap</span>
+        <span class="tool">Splunk</span><span class="tool">Wazuh</span><span class="tool">Snort</span>
+        <span class="tool">pfSense</span><span class="tool">AWS</span><span class="tool">Docker</span>
+        <span class="tool">Python</span><span class="tool">Wireshark</span><span class="tool">Active Directory</span>
+        <span class="tool">GitHub</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="certifications">
+  <div class="wrap">
+    <div class="eyebrow">03 / Certifications</div>
+    <h2 class="sec-title reveal">Credentials.</h2>
+    <div class="cert-grid reveal">
+      <div class="cert-card">
+        <div class="cert-name">Certified SOC Analyst (CSAv2)</div>
+        <div class="cert-meta">EC-Council · Jun 2026</div>
+      </div>
+      <div class="cert-card" style="border-color:var(--signal-dim); background:linear-gradient(160deg, var(--console) 0%, rgba(43,217,196,0.05) 100%);">
+        <div class="cert-name">Certified Ethical Hacker (CEH)</div>
+        <div class="cert-meta" style="color:var(--signal);">In progress</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">Advanced Cybersecurity Training Program</div>
+        <div class="cert-meta">KAUST Academy / NCA / SITE · Apr 2025</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">Cloud &amp; Wireless Security</div>
+        <div class="cert-meta">KAUST Cybersecurity Program · Dec 2023</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">Network Security</div>
+        <div class="cert-meta">(ISC)² · Dec 2023</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">Principles of Secure Coding</div>
+        <div class="cert-meta">UC Davis · Jan 2025</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-name">Introduction to Cybersecurity Essentials</div>
+        <div class="cert-meta">IBM · Jan 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="eyebrow">04 / Projects</div>
+    <h2 class="sec-title reveal">Featured work.</h2>
+
+    <div class="featured reveal">
+      <div class="featured-tag">🏆 Best Scientific Poster Award — Innovation &amp; Digital Entrepreneurship Forum 2026</div>
+      <h3>CloudChainX Guard</h3>
+      <p>A Random Forest–based machine learning framework that detects and blocks API-level attacks in cloud supply chain environments, with SHAP-based explainability so analysts can see <em>why</em> a request was flagged. Deployed end-to-end in a simulated AWS environment.</p>
+
+      <div class="attack-tags">
+        <span class="attack-tag">IAM Role Abuse</span>
+        <span class="attack-tag">Credential Theft</span>
+        <span class="attack-tag">S3 Data Exfiltration</span>
+        <span class="attack-tag">CloudTrail Alteration</span>
+      </div>
+
+      <div class="stat-row">
+        <div><div class="stat-num">96%</div><div class="stat-label">Detection Accuracy</div></div>
+        <div><div class="stat-num">4</div><div class="stat-label">Attack Types Covered</div></div>
+        <div><div class="stat-num">SHAP</div><div class="stat-label">Explainable AI</div></div>
+      </div>
+
+      <p class="stack-line"><b>Stack:</b> Random Forest · SHAP · Docker · LocalStack · CloudGoat · Flask · AWS</p>
+      <div class="hero-ctas" style="margin-top:24px;">
+        <a class="btn btn-primary" href="https://github.com/shaden142/CloudChainX-Guard_vPublic" target="_blank" rel="noopener">View on GitHub ↗</a>
+      </div>
+    </div>
+
+    <div class="proj-grid">
+      <div class="proj-card reveal">
+        <div class="proj-tag">Course Project — CCCY431 Machine Learning</div>
+        <h4>ML-Based Phishing Website Detection</h4>
+        <p>Trained and compared five classifiers (Logistic Regression, Decision Tree, Random Forest, SVM, KNN) on a 651K-URL dataset, engineering 22 features from domain, structural, lexical, and security-indicator patterns.</p>
+        <p>Random Forest came out on top, and I built a real-time detection interface with Streamlit so a URL can be checked instantly.</p>
+        <div class="proj-chip-row">
+          <span class="proj-chip">Random Forest</span>
+          <span class="proj-chip">Feature Engineering</span>
+          <span class="proj-chip">Streamlit</span>
+        </div>
+        <div class="proj-stat">94.39% classification accuracy</div>
+      </div>
+
+      <div class="proj-card reveal">
+        <div class="proj-tag">Course Project — CCCY-323 Network Security</div>
+        <h4>Enterprise Network Security: Red &amp; Blue Team Simulation</h4>
+        <p>Built a full enterprise Active Directory environment, then ran an APT-style Red Team attack chain — LLMNR poisoning, Kerberoasting, BloodHound privilege mapping, up to a Golden Ticket domain compromise.</p>
+        <p><b style="color:var(--frost);">My role was Blue Team defense:</b> deployed Snort IDS, configured Wazuh SIEM, and wrote pfSense firewall rules to detect and contain the attacks, then mapped findings to MITRE ATT&CK.</p>
+        <div class="proj-chip-row">
+          <span class="proj-chip">Snort IDS</span>
+          <span class="proj-chip">Wazuh SIEM</span>
+          <span class="proj-chip">pfSense</span>
+          <span class="proj-chip">MITRE ATT&CK</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="eyebrow">05 / Experience</div>
+    <h2 class="sec-title reveal">Where I've worked.</h2>
+
+    <div class="exp-item reveal">
+      <div class="exp-date">Jun 2025 – Aug 2025<br>Jeddah, Saudi Arabia</div>
+      <div>
+        <div class="exp-role">Information Security Intern</div>
+        <div class="exp-org">King Fahd Armed Forces Hospital</div>
+        <ul>
+          <li>Supported security monitoring and incident investigation through SIEM-based analysis and security event review.</li>
+          <li>Contributed to vulnerability and risk assessments to identify and evaluate potential security risks.</li>
+          <li>Supported a phishing simulation campaign targeting 200+ employees to identify user awareness gaps.</li>
+          <li>Assisted in reviewing information security policies, access control processes, and asset inventory records.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="exp-item reveal">
+      <div class="exp-date">2021 – 2026<br>Jeddah, Saudi Arabia</div>
+      <div>
+        <div class="exp-role">B.S. in Cybersecurity</div>
+        <div class="exp-org">University of Jeddah</div>
+        <ul>
+          <li>GPA: 4.9 / 5.0</li>
+          <li>Graduation project: CloudChainX Guard — Best Scientific Poster Award, 2026.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact-sec">
+  <div class="wrap">
+    <div class="eyebrow">06 / Contact</div>
+    <h2 class="contact-title reveal">Let's talk.</h2>
+    <p class="contact-lede reveal">Open to Cybersecurity Analyst roles and always happy to talk SOC, cloud security, or forensics.</p>
+    <div class="contact-grid reveal">
+      <a class="ccard" href="mailto:shadeeen142@gmail.com">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2BD9C4" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg>
+        shadeeen142@gmail.com
+      </a>
+      <a class="ccard" href="tel:+966568684962">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2BD9C4" stroke-width="2"><path d="M4 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L14 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 4 6a2 2 0 0 1 0-2z"/></svg>
+        +966 56 868 4962
+      </a>
+      <a class="ccard" href="https://linkedin.com/in/shaden-alsulami" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#2BD9C4"><path d="M4.98 3.5C4.98 4.9 3.9 6 2.5 6S0 4.9 0 3.5 1.1 1 2.5 1s2.48 1.1 2.48 2.5zM.5 8h4V23h-4V8zm7.5 0h3.8v2.05h.05c.53-1 1.83-2.05 3.77-2.05C19.9 8 21 10.1 21 13.4V23h-4v-8.7c0-2.08-.04-4.75-2.9-4.75-2.9 0-3.35 2.27-3.35 4.6V23h-4V8z"/></svg>
+        linkedin.com/in/shaden-alsulami
+      </a>
+      <a class="ccard" href="https://github.com/shaden142" target="_blank" rel="noopener">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="#2BD9C4"><path d="M12 .5C5.73.5.98 5.24.98 11.52c0 5.01 3.29 9.26 7.86 10.76.57.1.78-.25.78-.55v-2c-3.2.7-3.87-1.36-3.87-1.36-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.71.08-.71 1.17.08 1.78 1.2 1.78 1.2 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.68 0-1.26.45-2.28 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.8 0c2.2-1.49 3.17-1.18 3.17-1.18.64 1.59.24 2.76.12 3.05.74.81 1.18 1.83 1.18 3.09 0 4.41-2.69 5.38-5.25 5.67.41.36.78 1.07.78 2.16v3.2c0 .3.2.66.79.55A11.03 11.03 0 0 0 23 11.52C23 5.24 18.27.5 12 .5z"/></svg>
+        github.com/shaden142
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>Shaden Alsulami — Cybersecurity Analyst · Built 2026</footer>
+
+<script>
+  // mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // scroll reveal
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  // terminal status line typed once
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const statusLine = document.querySelector('.terminal-body p:last-child .cursor');
+  if (statusLine && !prefersReduced) {
+    const full = 'Actively seeking Cybersecurity Analyst opportunities';
+    const out = document.createElement('span');
+    out.className = 't-out-inline';
+    out.style.color = '#8A97AB';
+    let i = 0;
+    const parent = statusLine.parentElement;
+    const typeInterval = setInterval(() => {
+      if (i < full.length) {
+        statusLine.insertAdjacentText('beforebegin', full[i]);
+        i++;
+      } else {
+        clearInterval(typeInterval);
+      }
+    }, 28);
+  }
+</script>
+
 </body>
 </html>
